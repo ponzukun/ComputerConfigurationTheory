@@ -10,7 +10,7 @@ int main(void)
 	int b = 0;
 	int c = 0;
 	int quotient = 0;
-	int remainder = 0;
+	int modResult = 0;
 
 	printf("aの値を入力してください\n");
 	scanf_s("%d", &a);
@@ -23,9 +23,9 @@ int main(void)
 	
 	c = int(pow(a, 3) + pow(b, 4));
 	quotient = c / 8;
-	remainder = c % 8;
+	modResult = c % 8;
 	
 	printf("商 %d\n", quotient);
-	printf("余り %d\n", remainder);
+	printf("余り %d\n", modResult);
 }
 
