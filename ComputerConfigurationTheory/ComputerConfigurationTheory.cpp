@@ -1,10 +1,31 @@
-﻿
-#include <iostream>
+﻿/*整数加算の実行（キーボード入力）*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
-int main()
+
+int main(void)
 {
-    std::cout << "氏名：土井 裕輔\n"
-        << "所属する専門分野：データサイエンス\n"
-        << "現在住んでいる都市：京都市\n"
-        << "知っているコンピュータ言語：SQL, Python, JavaScript, TypeScript, Ruby, Java\n";
+	int a = 0;
+	int b = 0;
+	int c = 0;
+	int quotient = 0;
+	int remainder = 0;
+
+	printf("aの値を入力してください\n");
+	scanf_s("%d", &a);
+
+	printf("aの値の確認=%d\n", a);
+	printf("bの値を入力してください\n");
+	
+	scanf_s("%d", &b);
+	printf("bの値の確認=%d\n", b);
+	
+	c = int(pow(a, 3) + pow(b, 4));
+	quotient = c / 8;
+	remainder = c % 8;
+	
+	printf("商 %d\n", quotient);
+	printf("余り %d\n", remainder);
 }
+
