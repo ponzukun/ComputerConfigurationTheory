@@ -14,10 +14,9 @@ int main(void)
 
 	printf("aの値を入力してください\n");
 	scanf_s("%d", &a);
-
 	printf("aの値の確認=%d\n", a);
+
 	printf("bの値を入力してください\n");
-	
 	scanf_s("%d", &b);
 	printf("bの値の確認=%d\n", b);
 	
