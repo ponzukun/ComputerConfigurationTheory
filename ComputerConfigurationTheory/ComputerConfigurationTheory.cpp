@@ -9,36 +9,18 @@ void printArray(const std::vector<int>& arr) {
     std::cout << std::endl;
 }
 
-void findMinMaxWithSmallerIndex(const std::vector<int>& arr, int* min, int* max, int* min_index, int* max_index) {
+void findMinMax(const std::vector<int>& arr, int* min, int* max, int* min_index, int* max_index, bool prefer_larger_index) {
     *min = arr[0];
     *max = arr[0];
     *min_index = 0;
     *max_index = 0;
 
     for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] > *max) {
+        if (arr[i] > *max || (prefer_larger_index && arr[i] == *max)) {
             *max = arr[i];
             *max_index = i;
         }
-        if (arr[i] < *min) {
-            *min = arr[i];
-            *min_index = i;
-        }
-    }
-}
-
-void findMinMaxWithLargerIndex(const std::vector<int>& arr, int* min, int* max, int* min_index, int* max_index) {
-    *min = arr[0];
-    *max = arr[0];
-    *min_index = 0;
-    *max_index = 0;
-
-    for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] >= *max) {
-            *max = arr[i];
-            *max_index = i;
-        }
-        if (arr[i] <= *min) {
+        if (arr[i] < *min || (prefer_larger_index && arr[i] == *min)) {
             *min = arr[i];
             *min_index = i;
         }
@@ -77,7 +59,7 @@ int main() {
 
     //課題(1)
     printArray(A);
-    findMinMaxWithSmallerIndex(A, &min, &max, &min_index, &max_index);
+    findMinMax(A, &min, &max, &min_index, &max_index, false);
 
     std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
     std::cout << "最大値インデックス " << max_index << std::endl;
@@ -87,7 +69,7 @@ int main() {
 
     //課題(2)
     printArray(A);
-    findMinMaxWithLargerIndex(A, &min, &max, &min_index, &max_index);
+    findMinMax(A, &min, &max, &min_index, &max_index, true);
 
     std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
     std::cout << "最大値インデックス " << max_index << std::endl;
