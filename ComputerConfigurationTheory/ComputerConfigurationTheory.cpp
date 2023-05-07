@@ -1,35 +1,118 @@
 ﻿#include <iostream>
+#include <vector>
 
-// 2x2の行列と2次元ベクトルの逆行列を求める関数
-void solve(int a_11, int a_12, int a_21, int a_22, int b_1, int b_2, double& x, double& y) {
-    int det = a_11 * a_22 - a_12 * a_21;
-    // 行列式detが0のとき逆行列が存在しないため、
-    // その連立一次方程式は解を持たないか、または無数に解を持つ可能性がある
-    if (det == 0) {
-        if ((a_11 * b_2 - a_21 * b_1) == 0 && (a_12 * b_2 - a_22 * b_1) == 0) {
-            std::cout << "無数に解が存在します。\n";
+void printArray(const std::vector<int>& arr) {
+    std::cout << "入力値:";
+    for (int i = 0; i < arr.size(); i++) {
+        std::cout << " A[" << i << "]=" << arr[i];
+    }
+    std::cout << std::endl;
+}
+
+void findMinMaxWithSmallerIndex(const std::vector<int>& arr, int* min, int* max, int* min_index, int* max_index) {
+    *min = arr[0];
+    *max = arr[0];
+    *min_index = 0;
+    *max_index = 0;
+
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] > *max) {
+            *max = arr[i];
+            *max_index = i;
         }
-        else {
-            std::cout << "解が存在しません。\n";
+        if (arr[i] < *min) {
+            *min = arr[i];
+            *min_index = i;
         }
     }
-    else {
-        x = (b_1 * a_22 - a_12 * b_2) / static_cast<double>(det);
-        y = (a_11 * b_2 - b_1 * a_21) / static_cast<double>(det);
-        std::cout << "解は次の通りです: \n";
-        std::cout << "x = " << x << "\n";
-        std::cout << "y = " << y << "\n";
+}
+
+void findMinMaxWithLargerIndex(const std::vector<int>& arr, int* min, int* max, int* min_index, int* max_index) {
+    *min = arr[0];
+    *max = arr[0];
+    *min_index = 0;
+    *max_index = 0;
+
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] >= *max) {
+            *max = arr[i];
+            *max_index = i;
+        }
+        if (arr[i] <= *min) {
+            *min = arr[i];
+            *min_index = i;
+        }
+    }
+}
+
+void findMinMaxWithIndexes(const std::vector<int>& arr, int* min, int* max, std::vector<int>* min_indexes, std::vector<int>* max_indexes) {
+    *min = arr[0];
+    *max = arr[0];
+    min_indexes->clear();
+    max_indexes->clear();
+
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] > *max) {
+            *max = arr[i];
+            max_indexes->clear();
+            max_indexes->push_back(i);
+        }
+        else if (arr[i] == *max) {
+            max_indexes->push_back(i);
+        }
+        if (arr[i] < *min) {
+            *min = arr[i];
+            min_indexes->clear();
+            min_indexes->push_back(i);
+        }
+        else if (arr[i] == *min) {
+            min_indexes->push_back(i);
+        }
     }
 }
 
 int main() {
-    int a_11, a_12, a_21, a_22, b_1, b_2; // 連立一次方程式の係数
-    std::cout << "連立一次方程式 a_11 * x + a_12 * y = b_1, a_21 * x + a_22 * y = b_2 の係数を入力してください。\n";
-    std::cout << "a_11, a_12, a_21, a_22, b_1, b_2の順に入力: \n";
-    std::cin >> a_11 >> a_12 >> a_21 >> a_22 >> b_1 >> b_2;
+    std::vector<int> A = { 3, 5, 1, 10, 9, 2, 6, 10, 8, 1 };
+    int min, max, min_index, max_index;
 
-    double x, y;
-    solve(a_11, a_12, a_21, a_22, b_1, b_2, x, y);
+    //課題(1)
+    printArray(A);
+    findMinMaxWithSmallerIndex(A, &min, &max, &min_index, &max_index);
+
+    std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
+    std::cout << "最大値インデックス " << max_index << std::endl;
+    std::cout << "最小値インデックス " << min_index << std::endl;
+    std::cout << std::endl;
+
+
+    //課題(2)
+    printArray(A);
+    findMinMaxWithLargerIndex(A, &min, &max, &min_index, &max_index);
+
+    std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
+    std::cout << "最大値インデックス " << max_index << std::endl;
+    std::cout << "最小値インデックス " << min_index << std::endl;
+    std::cout << std::endl;
+
+
+    //課題(3)
+    std::vector<int> min_indexes, max_indexes;
+    printArray(A);
+    findMinMaxWithIndexes(A, &min, &max, &min_indexes, &max_indexes);
+
+    std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
+
+    std::cout << "最大値インデックス ";
+    for (int index : max_indexes) {
+        std::cout << index << ", ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "最小値インデックス ";
+    for (int index : min_indexes) {
+        std::cout << index << ", ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }
