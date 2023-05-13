@@ -1,100 +1,52 @@
 ﻿#include <iostream>
-#include <vector>
 
-void printArray(const std::vector<int>& arr) {
-    std::cout << "入力値:";
-    for (int i = 0; i < arr.size(); i++) {
-        std::cout << " A[" << i << "]=" << arr[i];
-    }
-    std::cout << std::endl;
+double Triangle_Square(double a, double b, double c) {
+    double s = (a + b + c) / 2;
+    double S = std::sqrt(s * (s - a) * (s - b) * (s - c));
+
+    return S;
 }
 
-void findMinMax(const std::vector<int>& arr, int* min, int* max, int* min_index, int* max_index, bool prefer_larger_index) {
-    *min = arr[0];
-    *max = arr[0];
-    *min_index = 0;
-    *max_index = 0;
+double Length(double x0, double y0, double x1, double y1) {
+    double dx = x0 - x1;
+    double dy = y0 - y1;
+    double L = std::sqrt(dx * dx + dy * dy);
 
-    for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] > *max || (prefer_larger_index && arr[i] == *max)) {
-            *max = arr[i];
-            *max_index = i;
-        }
-        if (arr[i] < *min || (prefer_larger_index && arr[i] == *min)) {
-            *min = arr[i];
-            *min_index = i;
-        }
-    }
+    return L;
 }
 
-void findMinMaxWithIndexes(const std::vector<int>& arr, int* min, int* max, std::vector<int>* min_indexes, std::vector<int>* max_indexes) {
-    *min = arr[0];
-    *max = arr[0];
-    min_indexes->clear();
-    max_indexes->clear();
+double Read_data(double *x, double *y) {
+    std::cout << "x座標を入力してください：";
+    std::cin >> *x;
 
-    for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] > *max) {
-            *max = arr[i];
-            max_indexes->clear();
-            max_indexes->push_back(i);
-        }
-        else if (arr[i] == *max) {
-            max_indexes->push_back(i);
-        }
-        if (arr[i] < *min) {
-            *min = arr[i];
-            min_indexes->clear();
-            min_indexes->push_back(i);
-        }
-        else if (arr[i] == *min) {
-            min_indexes->push_back(i);
-        }
-    }
+    std::cout << "y座標を入力してください：";
+    std::cin >> *y;
+
+    return 0;
 }
 
 int main() {
-    std::vector<int> A = { 3, 5, 1, 10, 9, 2, 6, 10, 8, 1 };
-    int min, max, min_index, max_index;
+    double L[3];
+    double X[3];
+    double Y[3];
 
-    //課題(1)
-    printArray(A);
-    findMinMax(A, &min, &max, &min_index, &max_index, false);
-
-    std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
-    std::cout << "最大値インデックス " << max_index << std::endl;
-    std::cout << "最小値インデックス " << min_index << std::endl;
-    std::cout << std::endl;
-
-
-    //課題(2)
-    printArray(A);
-    findMinMax(A, &min, &max, &min_index, &max_index, true);
-
-    std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
-    std::cout << "最大値インデックス " << max_index << std::endl;
-    std::cout << "最小値インデックス " << min_index << std::endl;
-    std::cout << std::endl;
-
-
-    //課題(3)
-    std::vector<int> min_indexes, max_indexes;
-    printArray(A);
-    findMinMaxWithIndexes(A, &min, &max, &min_indexes, &max_indexes);
-
-    std::cout << "最大値=" << max << ", 最小値=" << min << std::endl;
-
-    std::cout << "最大値インデックス ";
-    for (int index : max_indexes) {
-        std::cout << index << ", ";
+    for (int i = 0; i < 3; i++) {
+        Read_data(&X[i], &Y[i]);
     }
-    std::cout << std::endl;
 
-    std::cout << "最小値インデックス ";
-    for (int index : min_indexes) {
-        std::cout << index << ", ";
-    }
-    std::cout << std::endl;
+    std::cout << "A座標：" << X[0] << ", " << Y[0] << "\n";
+    std::cout << "B座標：" << X[1] << ", " << Y[1] << "\n";
+    std::cout << "C座標：" << X[2] << ", " << Y[2] << "\n";
+
+    L[0] = Length(X[0], Y[0], X[1], Y[1]);
+    L[1] = Length(X[1], Y[1], X[2], Y[2]);
+    L[2] = Length(X[2], Y[2], X[0], Y[0]);
+
+    std::cout << "aの長さ：" << L[0] << "\n";
+    std::cout << "bの長さ：" << L[1] << "\n";
+    std::cout << "cの長さ：" << L[2] << "\n";
+
+    std::cout << "面積：" << Triangle_Square(L[0], L[1], L[2]) << "\n";
 
     return 0;
 }
